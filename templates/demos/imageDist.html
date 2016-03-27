@@ -1,0 +1,155 @@
+<head>
+
+	%include templates/parts/head.html
+
+</head>
+<body>
+
+	<!-- Navigation Bar -->
+	%include templates/parts/navBar.html
+
+	<div class="container">
+			
+		<!-- Header -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="pageHeader">
+					<h1>
+						CS109 Logo
+					</h1>
+					
+
+				</div>
+				<hr/>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<p>
+					To generate the CS109 logo, we are going to throw half a million darts at a picture of the Stanford seal. We only keep the pixels that are hit by at least one dart. 
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6">
+				<h2>Dart Results</h2>
+				<canvas style="width:370px; height:370px;" id="imgCanvas"></canvas>
+			</div>
+
+			<div class="col-sm-6">
+				<h2>Dart Probability Density</h2>
+				<canvas style="width:370px; height:370px;" id="distCanvas"></canvas>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<h3>Darts thrown: <span id="dartNum">0</span></h3>
+			</div>
+		</div>
+		
+		
+				
+		<script>
+			function stdToVar(std) {
+				return std * std;
+			}
+
+			var LOGO_SIZE = 900;
+			var DARTS = 500000;
+
+			var xDist = gaussian(LOGO_SIZE/2, stdToVar(LOGO_SIZE/2));
+			var yDist = gaussian(300, stdToVar(LOGO_SIZE/5));
+			function getProbability(x, y) {
+		    	var xProb = xDist.pdf(x);
+		    	var yProb = yDist.pdf(y);
+		    	return xProb * yProb;
+		    }
+
+		    function drawDistribution() {
+			    var canvas = document.getElementById("distCanvas");
+			    canvas.width = LOGO_SIZE;
+				canvas.height = LOGO_SIZE;
+				var ctx=canvas.getContext("2d");
+				var imgData=ctx.createImageData(LOGO_SIZE,LOGO_SIZE);
+				var data = imgData.data;
+				var maxP = 0;
+				for (var r = 0; r < LOGO_SIZE; r++) {
+			    	for(var c = 0; c < LOGO_SIZE; c++) {
+			    		var p = getProbability(c, r);
+			    		maxP = Math.max(maxP, p);
+			    	}
+			    }
+			    console.log(maxP)
+				for (var r = 0; r < LOGO_SIZE; r++) {
+			    	for(var c = 0; c < LOGO_SIZE; c++) {
+						var i = (r * LOGO_SIZE + c) * 4;
+						
+						var p = getProbability(c, r);
+						var value = (1- p/maxP) * 256;
+						data[i + 0] = value; // red
+						data[i + 1] = value; // green
+						data[i + 2] = value; // blue
+						data[i + 3] = 255; // alpha
+			    	}
+			    }
+				ctx.putImageData(imgData,0,0);
+			}
+
+			function drawLogo() {
+				var canvas = document.getElementById('imgCanvas');
+				canvas.width = LOGO_SIZE;
+				canvas.height = LOGO_SIZE;
+				var ctx = canvas.getContext('2d');
+				logo = new Image();
+				logo.onload = function(){
+				    ctx.drawImage(logo, 0, 0, logo.width, logo.height, 0, 0, LOGO_SIZE, LOGO_SIZE);
+				    var imageData = ctx.getImageData(0, 0, LOGO_SIZE, LOGO_SIZE);
+				    var data = imageData.data;
+				    for (var r = 0; r < LOGO_SIZE; r++) {
+				    	for(var c = 0; c < LOGO_SIZE; c++) {
+				    		var i = (r * LOGO_SIZE + c) * 4;
+				    		data[i + 3] = 0; // alpha
+				    	}
+				    }
+
+
+				    var dartsThrown = 0;
+
+				    function throwDart() {
+				    	if(dartsThrown < DARTS) {
+				    		var delta = 500;
+				    		for(var j = 0; j < delta; j++) {
+						    	var col = Math.round(xDist.ppf(Math.random()));
+						    	var row = Math.round(yDist.ppf(Math.random()));
+						    	var index = (row * LOGO_SIZE + col) * 4;
+						    	data[index + 3] = 256; // alpha 
+						    }
+					    	ctx.putImageData(imageData, 0, 0);
+					    	dartsThrown += delta;
+					    	$("#dartNum").html(dartsThrown);
+					    	setTimeout(throwDart, 1);
+					    }
+				    }
+				    throwDart();
+				    
+				}
+				logo.src = '{{pathToRoot}}img/home/logo.gif';
+			}
+
+			window.onload = function() {
+				drawDistribution();
+				drawLogo();
+			}
+
+			
+			
+		</script>
+
+		%include templates/parts/footer.html
+
+	</div>
+
+</body>
