@@ -38,6 +38,8 @@
         <div class="row">
 			<div class="col-sm-12">
 				<hr/>
+
+				<div class="alert alert-success" role="info">We are using socrative today in class. Go to <a href="https://b.socrative.com/login/student/">https://b.socrative.com/login/student/</a> and use the Room Name: <b>CS109SPR</b></div>
 			</div>
 		</div>
 
@@ -56,8 +58,8 @@
 					<span class="sidebaricon glyphicon glyphicon-apple" aria-hidden="true"></span>
 					<a href="{{pathToRoot}}/handouts/overview.html">Course Overview</a> <br/>
 
-					<!--<span class="sidebaricon glyphicon glyphicon-send" aria-hidden="true"></span>
-					<a href="http://paperless.stanford.edu">Submitter</a> <br/>-->
+					<span class="sidebaricon glyphicon glyphicon-user" aria-hidden="true"></span>
+					<a href="{{pathToRoot}}/handouts/staff.html">Staff / Office Hours</a> <br/>
 
 					<img src="img/icons/piazza-icon.png" class="sidebaricon" alt="icon">
 					<a href="https://piazza.com/stanford/spring2016/cs109/home">Piazza</a> <br/>
@@ -71,9 +73,6 @@
 					<!--<span class="sidebaricon glyphicon glyphicon-backward" aria-hidden="true"></span>
 					<a href="{{pathToRoot}}/handouts/past.html">Past Quarters</a> <br/>-->
 
-
-					<span class="sidebaricon glyphicon glyphicon-calendar" aria-hidden="true"></span>
-					<a href="{{pathToRoot}}/handouts/help.html">Office Hours</a> <br/>
 
 					<img src="img/icons/socrative.png" class="sidebaricon" alt="icon">
 					<a href="https://b.socrative.com/login/student/">Socrative</a> <br/>
@@ -98,7 +97,8 @@
 						<a href="{{pathToRoot}}/assn/life.html">Problem Set 1</a>
 					</div>-->
 
-					<p><i>None yet</i></p>
+					<span class="sidebaricon glyphicon glyphicon-file" aria-hidden="true"></span>
+					<a href="{{pathToRoot}}pdfs/HO04 ProblemSet1.pdf"> Problem Set 1</a>
 					
 				</div>
 				<hr/>
@@ -118,6 +118,17 @@
 					</p>
 				</div>
 				<hr/>
+
+				<p class="subtleHeading">Staff</p>
+
+				<span class="sidebaricon glyphicon glyphicon-envelope" aria-hidden="true"></span> cs109@cs.stanford.edu<br/>
+
+
+				<a href="handouts/staff.html">
+					<img src="img/people/staff.png" style="width:100%;margin-top:5px" class="img-responsive"></img>
+				</a>
+				<hr/>
+
 					
 
 				<!-- Handouts 
@@ -131,16 +142,17 @@
 
 
 
-				<p class="subtleHeading">STAFF</p>
+				<p class="subtleHeading">Professor</p>
 				<div class="staffBox">
-					<img src="img/people/chris.bmp" class="staffImg"></img><br/>
-					Lecturer: <a href="http://stanford.edu/~cpiech">Chris Piech</a> <br/>
+					<!--<img src="img/people/chris.bmp" class="staffImg"></img><br/>-->
+					<a href="http://stanford.edu/~cpiech">Chris Piech</a> <br/>
 					<span class="sidebaricon glyphicon glyphicon-envelope" aria-hidden="true"></span> piech@cs.stanford.edu<br/>
 					<span class="sidebaricon glyphicon glyphicon-home" aria-hidden="true"></span> Gates 193<br/>
 					<span class="sidebaricon glyphicon glyphicon-time" aria-hidden="true"></span> Thur 2-4pm
 				</div>
-				<br/>
 
+				
+				
 				<!--<div class="staffBox">
 					<img src="img/people/megan.jpeg" class="staffImg"></img><br/>
 					Head TA: Megan Faulk<br/>
@@ -159,6 +171,54 @@
 				<div>
 
 					<p class="subtleHeading">NEWSFEED</p>
+
+					<div class="well">
+						<div class="newsfeedHeader">
+							<div class="newsfeedTitle">Problem Set 1</div>
+							<div class="moment">2016033008</div>
+						</div>
+						<p>
+							 <a href="pdfs/HO04 ProblemSet1.pdf">Problem Set 1</a> it out. It covers counting and core probability. It is due April 8th at 2:30pm. Submission will be online -- more instructions coming soon.</p>
+						</p>
+					</div>
+
+					<div class="well">
+						<div class="newsfeedHeader">
+							<div class="newsfeedTitle">LaTex</div>
+							<div class="moment">2016033008</div>
+						</div>
+						<p>
+							 You can optionally write up your problem sets using the LaTex system. See this <a onclick="alert('coming soon!');">intro</a> to LaTex, and the <a onclick="alert('coming soon!');">LaTex code</a> used to generate it. You can use this LaTex <a href="stuff/template.tex">template</a> custom made for CS109 problem sets.
+An online LaTeX editor and compiler is available at <a href="https://www.writelatex.com">www.writelatex.com</a>.
+</p>
+
+<p>
+Former CS109 student Joe Delgado has written a nunber of snippets for Latex in Sublime, which he has made available on <a href="https://github.com/djoeman84/Latex-Math-Snippets">github</a>.</p>
+						</p>
+					</div>
+
+					<div class="well">
+						<div class="newsfeedHeader">
+							<div class="newsfeedTitle">NYT Article on Stats</div>
+							<div class="moment">2016032714</div>
+						</div>
+						<p>
+							 <div class="media">
+							  <div class="media-left">
+							    <div style="width:80px;">
+							      <img class="media-object" src="https://s0.wp.com/wp-content/themes/vip/nytimes-witw/img/global/nyt-t-logo.png" style="width:80px">
+							    </div>
+							  </div>
+							  <div class="media-body">
+							    An article from the New York Times discusses the increasing importance of statistics in computing. The article is entitled <a href="http://www.nytimes.com/2009/08/06/technology/06stats.html">For Today's Graduate, Just One Word: Statistics</a>. On a similar vein, The Wall Street Journal published an article entitled <a href="http://www.wsj.com/articles/SB10001424052702304871704575160553254798886">New Hiring Formula Values Math Pros</a> talking about how employers are seeking computer scientists with training in statistics and probability. CS109 is specifically mentioned.
+							  </div>
+							</div>
+						</p>
+					</div>
+
+
+					
+
 
 					<div class="well">
 						<div class="newsfeedHeader">
