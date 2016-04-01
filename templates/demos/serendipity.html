@@ -1,0 +1,195 @@
+<head>
+
+	%include templates/parts/head.html
+
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.1.0/math.min.js"></script>
+	<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+
+
+</head>
+<body>
+
+	<!-- Navigation Bar -->
+	%include templates/parts/navBar.html
+
+	<div class="container">
+			
+		<!-- Header -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="pageHeader">
+					<h1>
+						Serendipity
+					</h1>
+					
+
+				</div>
+				<hr/>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+
+				
+				
+					<p>
+						<center>
+					<img src = "{{pathToRoot}}img/random/serendip.png" style="max-width:100%"></img>
+				</center>
+				</p>
+				<p>
+					<center>
+					<i>The word serendipity comes from the  Persian fairy tale of the <a href="https://en.wikipedia.org/wiki/The_Three_Princes_of_Serendip">Three Princes of Serendip</a></i>
+					</center>
+				</p>
+				</center>
+			</p>
+			<hr/>
+				<h2>Problem</h2>
+				<p>
+					What is the probability of a seredipitous encounter with a friend? Imagine you are in an area with a large general population and you have a small number of friends. What are the chances that you run into at least one friend if you see a handful of people? Assume that seeing each person from the population is equally likely.
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">Total Population</label>
+				    <input type="number" class="form-control" id="totalPopulation" value="20000">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Friends</label>
+				    <input type="number" class="form-control" id="friends" value="150">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">People that you see</label>
+				    <input type="number" class="form-control" id="seen" value="100">
+				  </div>
+				  
+				  <button type="submit" class="btn btn-success" onclick="calculate();">Calculate</button>
+
+				  <hr/>
+
+				  <h2>Answer</h2>
+				  <p>
+				  	The probability that you see at least one friend is: <span class="ansValue"></span>
+				  </p>
+				 
+				  <div id="explination" style="display:none">
+				  	 <hr/>
+					  <h2>Explination</h2>
+					  <div id="answer">
+					  	<p>
+					  		First lets define some useful terms:<br/>
+					  		$p$ = total population = <span id="popValue"></span><br/>
+					  		$s$ = people seen = <span id="seenValue"></span><br/>
+					  		$f$ = num friends = <span id="friendsValue"></span>
+					  	</p>
+					  	<h3>Approach</h3>
+					  	<p>
+							It's hard to calculate the probability that you see at least one person because then you have to think of the ways you could see exactly one friend, then exactly two friends and so on. It is much easier to calculate the probability that you see zero people that you know. If we can calculate the probability of seeing zero friends our answer is just one minus that number.
+						</p>
+
+						<h3>Prob that you don't see friends</h3>
+						<p>
+							Let the sample space be the set of ways that you could see $s$ people. The size of the sample space is: the total population choose the number of people seen. 
+						</p>
+
+						<p>
+							The event space is the set of ways that you could see no friends. The size of the event space is: the total population choose the number of non friends (aka population - friends).
+						</p>
+
+						<p>Thus the probability of not seeing a friend is:
+						</p>
+
+						<p style="font-size:100%">
+							$\text{prob(not seen)} = \frac{ \left( {\begin{array}{*{20}c} p - f \\ s \\ \end{array}} \right) } { \left( {\begin{array}{*{20}c} p \\ s \\ \end{array}} \right) } $
+						</p>
+
+						<h3>Prob that you see friends</h3>
+						<p>
+							Now the probability that you see at least one friend is 1 minus the probability that you see no friends.
+						</p>
+						<p style="font-size:100%">
+							$\text{prob(seen)} = 1 - \frac{ \left( {\begin{array}{*{20}c} p - f \\ s \\ \end{array}} \right) } { \left( {\begin{array}{*{20}c} p \\ s \\ \end{array}} \right) } $
+						</p>
+
+						<p>That is equal to <span class="ansValue"></span>
+
+						</p>
+						<p><i>As a note: the javascript calculation can be off by as much as 0.01 because of some mechanisms employed to avoid overflow.</i></p>
+
+						<h3>Isn't that suprising?</h3>
+					</div>
+				
+				</div>
+			</div>
+
+
+
+			
+		</div>
+
+		
+		
+		
+				
+		<script>
+			function calculate() {
+				var p = parseInt($("#totalPopulation").val())
+				var f = parseInt($("#friends").val())
+				var s = parseInt($("#seen").val())
+
+				$("#popValue").html(p)
+				$("#friendsValue").html(f)
+				$("#seenValue").html(s)
+
+				var numeratorTerms = range(p - f - s, p - s);
+				var denominatorTerms = range(p - f, p);
+				
+				var pFalse = divide(numeratorTerms, denominatorTerms)
+
+				var pTrue = 1 - pFalse;
+
+				$(".ansValue").html(pTrue.toFixed(2));
+
+				$("#explination").show()
+			}
+
+			function divide(a, b) {
+				var result = 1;
+				for(var i = 0; i < a.length; i++) {
+					result *= a[i]
+					result /= b[i]
+				}
+				return result;
+			}
+
+			function range(start, end) {
+				var list = []
+				for(var i = start; i <= end; i++) {
+					list.push(i);
+				}
+				return list;
+			}
+
+			function choose(n, r) {
+				var factR = math.factorial(r)
+				var factOther = math.factorial(n - r)
+				return math.factorial(n) / (factR * factOther)
+			}
+			
+			
+		</script>
+
+		%include templates/parts/footer.html
+
+	</div>
+
+</body>
