@@ -241,6 +241,11 @@
 				var f = parseInt($("#friends").val())
 				var s = parseInt($("#seen").val())
 
+				if(s > p) {
+					alert("seen must be less than total population");
+					return;
+				}
+
 				$("#popValue").html(p)
 				$("#friendsValue").html(f)
 				$("#seenValue").html(s)
@@ -258,6 +263,8 @@
 			}
 
 			function divide(a, b) {
+				console.log(a)
+				console.log(b)
 				var result = 1;
 				for(var i = 0; i < a.length; i++) {
 					result *= a[i]
