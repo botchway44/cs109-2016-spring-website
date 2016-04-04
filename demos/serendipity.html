@@ -86,6 +86,7 @@
           <ul class="dropdown-menu">
             <li><a href="//web.stanford.edu/class/cs109/demos/imageDist.html">CS109 Logo</a></li>
             <li><a href="//web.stanford.edu/class/cs109/demos/serendipity.html">Serendipity</a></li>
+            <li><a href="//web.stanford.edu/class/cs109/demos/naturalBayes.html">Medical Tests</a></li>
            <!--<li><a href=""><i>None yet!</i></a></li>-->
 
           </ul>
@@ -111,7 +112,9 @@
 					<h1>
 						Serendipity
 					</h1>
-					
+					<p class="subtleHeading">
+						April 1st, 2016
+					</p>
 
 				</div>
 				<hr/>
@@ -169,7 +172,7 @@
 				 
 				  <div id="explination" style="display:none">
 				  	 <hr/>
-					  <h2>Explination</h2>
+					  <h2>Terms</h2>
 					  <div id="answer">
 					  	<p>
 					  		First lets define some useful terms:<br/>
@@ -177,7 +180,8 @@
 					  		$s$ = people seen = <span id="seenValue"></span><br/>
 					  		$f$ = num friends = <span id="friendsValue"></span>
 					  	</p>
-					  	<h3>Approach</h3>
+					  	<hr/>
+					  	<h2>Approach</h2>
 					  	<p>
 					  		Since we are going to consider that each way of seing $s$ people is equally likely, then we can use the "<a href="//web.stanford.edu/class/cs109/pdfs/HO06 Probability.pdf">Equally Likely Events</a>" probability calculation: 
 					  	</p>
@@ -191,7 +195,8 @@
 							One way to approach this problem is to directly count all ways you see 1 or more friends. That is hard. You would have to count the ways you could see exactly one friend, then exactly two friends and so on. It is much easier to calculate the ways that you see zero friends. If we can calculate the probability of seeing zero friends our answer is just one minus that number.
 						</p>
 
-						<h3>Prob that you don't see friends</h3>
+						<hr/>
+						<h2>Prob that you don't see friends</h2>
 						<p>
 							Let the sample space ($S$) be the set of ways that you could see $s$ people. The size of the sample space is: the total population choose the number of people seen. 
 						</p>
@@ -207,7 +212,8 @@
 							$\text{prob(not seen)} = \frac{ \left( {\begin{array}{*{20}c} p - f \\ s \\ \end{array}} \right) } { \left( {\begin{array}{*{20}c} p \\ s \\ \end{array}} \right) } $
 						</p>
 
-						<h3>Prob that you see friends</h3>
+						<hr/>
+						<h2>Prob that you see friends</h2>
 						<p>
 							Now the probability that you see at least one friend is 1 minus the probability that you see no friends.
 						</p>
@@ -218,9 +224,8 @@
 						<p>That is equal to <span class="ansValue"></span>
 
 						</p>
-						<p><i>As a note: the javascript calculation can be off by as much as 0.01 because of some mechanisms employed to avoid overflow.</i></p>
-
-						<h3>Isn't that suprising?</h3>
+						<hr/>
+						<h2>Isn't that suprising?</h2>
 					</div>
 				
 				</div>
