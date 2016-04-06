@@ -70,6 +70,8 @@
             <li><a href="//web.stanford.edu/class/cs109/pdfs/HO04 ProblemSet1.pdf">4 - Problem Set 1</a></li>
             <li><a href="//web.stanford.edu/class/cs109/pdfs/HO05 Combinatorics.pdf">5 - Combinatorics</a></li>
             <li><a href="//web.stanford.edu/class/cs109/pdfs/HO06 Probability.pdf">6 - Probability</a></li>
+            <li><a href="//web.stanford.edu/class/cs109/pdfs/HO07 CondProbability.pdf">7 - Conditional Probability</a></li>
+            <li><a href="//web.stanford.edu/class/cs109/pdfs/HO08 Independence.pdf">8 - Independence</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -308,6 +310,7 @@
 				var numSick = prior * 1000
 				var numSickPos = numSick * cond
 				var numHealthPos = (1-prior) * 1000 * condNeg
+				
 
 				var index = 0
 				for (var c = 0; c < N_COLS; c++) {
@@ -329,13 +332,11 @@
 			    	}
 			    }
 
-			    var truePos = (1000 * prior * cond).toFixed(0);
-			    var falsePos = (1000 * (1 - prior) * condNeg).toFixed(0);
-			    var pos = (parseInt(truePos) + parseInt(falsePos)).toFixed(0);
-			    var naturalAprox = (truePos / pos).toFixed(4)
-			    $(".naturalPosValue").html(pos);
-			    $(".naturalTruePosValue").html(truePos);
-			    $(".naturalFalsePosValue").html(falsePos);
+			    var numPos = Math.ceil(numSickPos) + Math.ceil(numHealthPos)
+			    var naturalAprox = (Math.ceil(numSickPos) / numPos).toFixed(4)
+			    $(".naturalPosValue").html(numPos);
+			    $(".naturalTruePosValue").html(Math.ceil(numSickPos));
+			    $(".naturalFalsePosValue").html(Math.ceil(numHealthPos));
 			    $(".naturalAprox").html(naturalAprox)
 			}
 
