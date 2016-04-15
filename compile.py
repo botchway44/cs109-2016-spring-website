@@ -7,7 +7,7 @@ IGNORE_DIRS = [
 ]
 TEMPLATE_DIR = 'templates'
 
-DEPLOY = False
+DEPLOY = True
 
 class Compiler(object):
 
