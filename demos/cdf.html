@@ -134,79 +134,58 @@
 			<div class="col-sm-12">
 				<div id="pageHeader">
 					<h1>
-						Representative Jury Pools
+						Normal Cumulative Density Function
 					</h1>
 					
 
 				</div>
 				<hr/>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-sm-12">
-				<p>
-					<center>
-						<img src = "//web.stanford.edu/class/cs109/img/random/breyer.jpg" style="max-width:30%"></img>
-					</center>
-				</p>
-				<p>
-					<center>
-					<i>Justice Breyer is a Stanford Alum</a></i>
-					</center>
-				</p>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-sm-12">
-				<p>
-					In the Supreme Court case: Berghuis v. Smith, the Supreme Court (of the US) discussed the question: "If a group is underrepresented in a jury pool, how do you tell?"
-</p>
-<p>
-	
-	Justice Breyer [Stanford Alum] opened the questioning by invoking the binomial theorem.  He hypothesized a scenario involving “an urn with a thousand balls, and sixty are red, and nine hundred forty are green, and then you select them at random… twelve at a time.”  According to Justice Breyer and the binomial theorem, if the red balls were black jurors then “you would expect… something like a third to a half of juries would have at least one black person” on them. 
-
-				</p>
 
 				<p>
-					Note: What is missing in this conversation is the power of diverse backgrounds when making difficult decisions.
+					To calculate the Cumulative Density Function (CDF) for a normal random variable at a value $x$, also writen as $F(x)$, you can transform your distribution to the "standard normal" and look up the corresponding value in the standard normal CDF. However, most programming libraries will provide a normal cdf funciton. This tool replicates said functionality.
 				</p>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-sm-12">
 				<hr/>
-				<button type="button" class="btn btn-primary" onclick="simulate();">Simulate</button>
-				<div class="row">
-					<div class="col-sm-12">
-						<h2>Simulation:</h2>
-						<canvas style="width:770px; height:100px;" id="simCanvas"></canvas>
+
+				<h2> Calculator</h2>
+				<form class="form-inline">
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-4 control-label">x: &nbsp;&nbsp;</label>
+				    <div class="col-sm-4">
+				      <input type="number" class="form-control" id="inputX" value="0.25">
+				    </div>
+				  </div>
+				 </form>
+				  <form class="form-inline">
+				  <div class="form-group">
+				    <label for="inputPassword3" class="col-sm-4 control-label">mu: </label>
+				    <div class="col-sm-4">
+				      <input type="number" class="form-control" id="inputMu" value="0">
+				    </div>
+				  </div>
+				  </form>
+				  <form class="form-inline">
+				  <div class="form-group">
+				    <label for="inputPassword3" class="col-sm-4 control-label">std: </label>
+				    <div class="col-sm-4">
+				      <input type="number" class="form-control" id="inputStd" value="1">
+				    </div>
+				  </div>
+				 </form>
+				 <p>
+				  <button class="btn btn-primary" onclick="calculate()" style="font-family:monospace">norm.cdf(x, mu, std)</button>
+				</p>
+				<p style="font-family:monospace" id="numResult">
+				</p>
+				
+
+				<div id="hidden" style="display:none">
+					<hr/>
+					<h2>Explination</h2>
+					<div id="resultDiv">
 					</div>
-
 				</div>
-			</div>
-		</div>
+				
 
-		<div class="row">
-			<div class="col-sm-12">
-				<hr/>
-				<h2>Explination:</h2>
-				<p>
-					You can think of the number of under-representative jurrors as being a Hyper Geometric Random Variable st 
-				</p>
-				<p>
-					\begin{align*}X \sim HypGeo(n=12, N = 1000, m = 60)\end{align*}
-				</p>
-				<p>
-					\begin{align*} 
-						P(X \geq 1) &= 1 - P(X = 0) \\
-									&= 1 - \frac{ {60 \choose 0}{940 \choose 12} }{1000 \choose 12} \\
-									&\approx 0.5261
-					\end{align*} 
-
-				</p>
 			</div>
 		</div>
 
@@ -217,49 +196,24 @@
 				
 		<script>
 
-			var i = 0
-			var ctx = null;
+			function calculate() {
+				var x = $("#inputX").val()
+				var mu = $("#inputMu").val()
+				var std = $("#inputStd").val()
+				var dist = gaussian(mu, std * std);
+				var result = dist.cdf(x).toFixed(4);
+				console.log(result)
 
-		    function simulate() {
-		    	CANVAS_WIDTH = 770
-		    	CANVAS_HEIGHT = 100
-			    var canvas = document.getElementById("simCanvas");
-			    canvas.width = CANVAS_WIDTH;
-				canvas.height = CANVAS_HEIGHT;
-				ctx=canvas.getContext("2d");
+				var part1 = "<p>Let $X \\sim \\mathcal{N}(\\mu = " + mu + ", \\sigma = " + std + ")$</p>"
 
-				i = 0;
-				setTimeout(simulateSingle, 1000);
+				var part2 = "<p>$P(X < " + x + ") = \\Phi\\left(\\frac{"+x+" - "+mu+"}{"+std+"}\\right) = " + result +"$</p>"
 
-				
-				
+				$("#resultDiv").html(part1 + part2)
+				$("#numResult").html("= " + result)
 
+				MathJax.Hub.Queue(["Typeset",MathJax.Hub, "resultDiv"]);
+				$("#hidden").show()
 			}
-
-			function simulateSingle() {
-				console.log(i)
-				if(i < 12) {
-					var color = "purple"
-					if(Math.random() < (60/1000)) {
-						color = "blue"
-					}
-					var r = 20
-					var x = 60*i + r + 5
-					var y = r + 5
-					drawCircle(x, y, r, color)
-					i += 1
-					setTimeout(simulateSingle, 1000);
-				}
-			}
-
-			function drawCircle(cx, cy, r, color) {
-				ctx.beginPath();
-				ctx.arc(cx, cy, r, 0, 2 * Math.PI, false);
-				ctx.fillStyle = color;
-				ctx.fill();
-			}
-
-			
 		    
 
 			

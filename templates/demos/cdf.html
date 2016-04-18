@@ -1,0 +1,128 @@
+<head>
+
+	%include templates/parts/head.html
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.1.0/math.min.js"></script>
+	<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+
+	<style>
+		.axis path,
+	    .axis line {
+	        fill: none;
+	        stroke: #000;
+	        shape-rendering: crispEdges;
+	    }
+	    .line {
+	        fill: none;
+	        stroke: steelblue;
+	        stroke-width: 1.5px;
+	    }
+    </style>
+
+</head>
+<body>
+
+	<!-- Navigation Bar -->
+	%include templates/parts/navBar.html
+
+	<div class="container">
+			
+		<!-- Header -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="pageHeader">
+					<h1>
+						Normal Cumulative Density Function
+					</h1>
+					
+
+				</div>
+				<hr/>
+
+				<p>
+					To calculate the Cumulative Density Function (CDF) for a normal random variable at a value $x$, also writen as $F(x)$, you can transform your distribution to the "standard normal" and look up the corresponding value in the standard normal CDF. However, most programming libraries will provide a normal cdf funciton. This tool replicates said functionality.
+				</p>
+				<hr/>
+
+				<h2> Calculator</h2>
+				<form class="form-inline">
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-4 control-label">x: &nbsp;&nbsp;</label>
+				    <div class="col-sm-4">
+				      <input type="number" class="form-control" id="inputX" value="0.25">
+				    </div>
+				  </div>
+				 </form>
+				  <form class="form-inline">
+				  <div class="form-group">
+				    <label for="inputPassword3" class="col-sm-4 control-label">mu: </label>
+				    <div class="col-sm-4">
+				      <input type="number" class="form-control" id="inputMu" value="0">
+				    </div>
+				  </div>
+				  </form>
+				  <form class="form-inline">
+				  <div class="form-group">
+				    <label for="inputPassword3" class="col-sm-4 control-label">std: </label>
+				    <div class="col-sm-4">
+				      <input type="number" class="form-control" id="inputStd" value="1">
+				    </div>
+				  </div>
+				 </form>
+				 <p>
+				  <button class="btn btn-primary" onclick="calculate()" style="font-family:monospace">norm.cdf(x, mu, std)</button>
+				</p>
+				<p style="font-family:monospace" id="numResult">
+				</p>
+				
+
+				<div id="hidden" style="display:none">
+					<hr/>
+					<h2>Explination</h2>
+					<div id="resultDiv">
+					</div>
+				</div>
+				
+
+			</div>
+		</div>
+
+		
+		
+		
+		
+				
+		<script>
+
+			function calculate() {
+				var x = $("#inputX").val()
+				var mu = $("#inputMu").val()
+				var std = $("#inputStd").val()
+				var dist = gaussian(mu, std * std);
+				var result = dist.cdf(x).toFixed(4);
+				console.log(result)
+
+				var part1 = "<p>Let $X \\sim \\mathcal{N}(\\mu = " + mu + ", \\sigma = " + std + ")$</p>"
+
+				var part2 = "<p>$P(X < " + x + ") = \\Phi\\left(\\frac{"+x+" - "+mu+"}{"+std+"}\\right) = " + result +"$</p>"
+
+				$("#resultDiv").html(part1 + part2)
+				$("#numResult").html("= " + result)
+
+				MathJax.Hub.Queue(["Typeset",MathJax.Hub, "resultDiv"]);
+				$("#hidden").show()
+			}
+		    
+
+			
+		</script>
+
+		%include templates/parts/footer.html
+
+	</div>
+
+</body>
