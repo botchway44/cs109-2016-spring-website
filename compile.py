@@ -1,13 +1,15 @@
 from plugins.bottle.bottle import SimpleTemplate
 
 import os.path
+import sys
 
 IGNORE_DIRS = [
     'parts'
 ]
 TEMPLATE_DIR = 'templates'
 
-DEPLOY = True
+# Use the -t flag if you want to compile for local tests
+DEPLOY = not '-t' in sys.argv
 
 class Compiler(object):
 
