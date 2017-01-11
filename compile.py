@@ -46,7 +46,7 @@ class Compiler(object):
         
     def getPathToRoot(self, relativePath):
         if DEPLOY:
-            return '//web.stanford.edu/class/cs109/'
+            return '//web.stanford.edu/class/archive/cs/cs109/cs109.1166/'
         return self.getRelPathToRoot(relativePath)
 
     def getRelPathToRoot(self, relativePath):
